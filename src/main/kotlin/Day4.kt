@@ -1,7 +1,8 @@
 fun main ()
 {
     val stream = loadStream()
-    val boards = loadBoards()
+    val boards = loadBoards().toMutableList()
+    val boardToRemove = mutableListOf<Array<Array<Pair<Int, Boolean>>>>()
 
     for (i in stream.indices)
     {
@@ -9,10 +10,19 @@ fun main ()
         {
             if (updateBoard(board, stream[i]))
             {
-                println(calculateFinal(board, stream[i]))
-                return
+                boardToRemove.add(board)
             }
         }
+        for (b in boardToRemove)
+        {
+            if (boards.size == 1)
+            {
+                println(calculateFinal(boards[0], stream[i]))
+                return
+            }
+            boards.remove(b)
+        }
+        boardToRemove.clear()
     }
 }
 
@@ -94,6 +104,5 @@ fun calculateFinal (board: Array<Array<Pair<Int, Boolean>>>, winningNum : Int) :
             }
         }
     }
-    println("winning num: $winningNum")
     return sum * winningNum
 }
