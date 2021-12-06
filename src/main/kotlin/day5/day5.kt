@@ -1,3 +1,5 @@
+package day5
+
 import kotlin.math.max
 
 fun main ()
