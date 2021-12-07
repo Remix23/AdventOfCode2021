@@ -57,7 +57,7 @@ fun solveTask3 () : Int
 //    print("Number of elems: ")
 //    val n : Int = readLine()!!.toInt()
 
-    val fileName = "src/main/in.txt"
+    val fileName = "src/main/in5.txt"
     val file = File(fileName)
 
     val numbers = Array<String?>(1000, { e -> ""})
