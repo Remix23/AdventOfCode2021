@@ -1,24 +1,26 @@
 package day10
 
 val assertions = mapOf('(' to ')', '{' to '}', '[' to ']', '<' to '>')
-val costs = mapOf(')' to 3, ']' to 57, '}' to 1197, '>' to 25137)
+val costs = mapOf('(' to 1, '[' to 2, '{' to 3, '<' to 4)
 
 fun main ()
 {
-    var result = 0
-    for (i in 0..97)
+    var results = mutableListOf<Long>()
+    for (i in 0..98)
     {
-        val mistakes = checkLine()
-        if (mistakes.size > 0) result += costs[mistakes.first()]!!
+        val tofill = checkLine()
+        tofill.reverse()
+        if (tofill.size > 0) results.add(calcAutoCompleteErrorScore(tofill))
     }
-    println(result)
+    results.sort()
+    println(results[results.size / 2])
+
 }
 
 fun checkLine () : MutableList<Char>
 {
     val line = readLine()
     val stack = mutableListOf<Char>()
-    val mistakes = mutableListOf<Char>()
 
     line!!.forEach {
         if (it == '(' || it == '[' || it == '{' || it == '<')
@@ -28,14 +30,22 @@ fun checkLine () : MutableList<Char>
             if (assertions[stack.last()] == it){
                 stack.removeAt(stack.size - 1)
             } else {
-                mistakes.add(it)
+                stack.clear()
+                return stack
             }
         }
     }
-    return mistakes
+    return stack
 }
 
-fun calcSyntaxErrorScore (mistakes : MutableList<Char>) : Int
+fun calcAutoCompleteErrorScore (mistakes : MutableList<Char>) : Long
 {
-    return 0
+    var result = 0L
+
+    mistakes.forEach {
+        result *= 5
+        result += costs[it]!!
+    }
+
+    return result
 }
