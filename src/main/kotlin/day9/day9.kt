@@ -21,9 +21,9 @@ fun loadMap (path : String) : Array<Array<Int>>
 {
     val file = File(path)
     val board = mutableListOf<Array<Int>>()
-    file.forEachLine {
+    file.forEachLine { it ->
         println(it)
-        val row = it.split("").filter { it.length > 0 }.map { it.toInt() }.toTypedArray()
+        val row = it.split("").filter { it.isNotEmpty() }.map { it.toInt() }.toTypedArray()
         board.add(row)
     }
 
