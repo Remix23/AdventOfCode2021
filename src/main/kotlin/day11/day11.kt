@@ -7,11 +7,10 @@ fun main ()
     val board = loadMap("C:\\Users\\keruj\\IdeaProjects\\KotlinAdventOfCode\\src\\main\\inputs\\in11.txt")
 
     var result = 0
-    val numOfSimSteps = 100
+    var numOfSimSteps = 1
 
-    for (i in 0 until numOfSimSteps)
+    while (true)
     {
-        println("Step : $i")
         val flashes = mutableSetOf<Pair<Int, Int>>()
         for (y in board.indices)
         {
@@ -23,10 +22,11 @@ fun main ()
                 }
             }
         }
-        result += processFlashes(flashes, board)
+        if (processFlashes(flashes, board) == 100) break
         processStep(board)
+        numOfSimSteps++
     }
-    println(result)
+    println(numOfSimSteps)
 }
 
 fun loadMap (path : String) : Array<Array<Triple<Int, Int, Boolean>>>
@@ -69,12 +69,10 @@ fun updateCell (x : Int, y : Int, board: Array<Array<Triple<Int, Int, Boolean>>>
 fun processFlashes (flashes: MutableSet<Pair<Int, Int>>, board: Array<Array<Triple<Int, Int, Boolean>>>) : Int
 {
     var counter = 0
-    val flashed = mutableListOf<Pair<Int, Int>>()
     while (flashes.isNotEmpty())
     {
         val current = flashes.first()
         flashes.remove(current)
-        flashed.add(current)
 
         board[current.second][current.first] = Triple(first = 0, second = 0, third = true)
         counter++
