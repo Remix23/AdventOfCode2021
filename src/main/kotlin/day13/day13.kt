@@ -5,10 +5,21 @@ import java.io.File
 fun main () {
     val (paper, commands) = loadPaper("C:\\Users\\keruj\\IdeaProjects\\KotlinAdventOfCode\\src\\main\\inputs\\in13.txt")
 
-    fold(paper, commands.first().second, commands.first().first)
-//    fold(paper, commands[1].second, commands[1].first)
+    for (cmd in commands)
+    {
+        fold(paper, cmd.second, cmd.first)
+    }
 
     println(calcPoints(paper))
+    for (row in paper)
+    {
+        for (elem in row)
+        {
+            if (elem) print('#')
+            else print('.')
+        }
+        println()
+    }
 }
 
 fun loadPaper (path : String) : Pair<MutableList<MutableList<Boolean>>, MutableList<Pair<Char, Int>>>
